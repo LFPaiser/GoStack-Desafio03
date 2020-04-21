@@ -9,6 +9,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
+
 import api from "./services/api";
 
 export default function App() {
@@ -23,13 +24,14 @@ export default function App() {
   }, [])
 
   async function handleLikeRepository(id) {
-    const response = await api.patch(`repositories/${id}/like`)
+    const response = await api.post(`repositories/${id}/like`)
 
     const likes = response.data
+    console.log(response.data)
 
     const updatedRepos = repositories.map(repo => {
       if (repo.id === id) {
-        return { ...repo, likes }
+        return { ...repo, ...likes}
       } else {
         return repo
       }
